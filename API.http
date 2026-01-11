@@ -1,0 +1,32 @@
+POST http://localhost:3000/
+Content-Type: application/json
+
+{
+
+    "name": "iPhone 15 test",
+    "description": "iPhone 16 test is the latest iPhone from Apple",
+    "img_url": "https://www.apple.com/iphone-15/images/overview/hero/hero_large_2x.jpg",
+    "price": 1000,
+    "slug": "iphone-15-test"
+}
+
+###
+GET http://localhost:3000/
+
+###
+GET http://localhost:3000/1
+
+###
+PUT http://localhost:3000/4
+Content-Type: application/json
+
+{
+    "name": "Updated iPhone 15 test2",
+    "description": "Updated iPhone 15 test is the latest iPhone from Apple",
+    "img_url": "https://www.apple.com/iphone-15/images/overview/hero/hero_large_2x.jpg",
+    "price": 1000,
+    "slug": "iphone-15-test"
+}
+
+###
+DELETE http://localhost:3000/7
