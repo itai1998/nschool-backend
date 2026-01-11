@@ -1,6 +1,8 @@
 import "dotenv/config";
 import express from "express";
 import sequelizePackage from "sequelize";
+import swaggerJsdoc from "swagger-jsdoc";
+import swaggerUi from "swagger-ui-express";
 const { DataTypes, Model, Sequelize } = sequelizePackage;
 
 const sequelize = new Sequelize(
@@ -51,6 +53,111 @@ const app = express();
 app.use(express.json());
 const port = parseInt(process.env.PORT) || 3000;
 
+// Swagger configuration
+const swaggerOptions = {
+  definition: {
+    openapi: "3.0.0",
+    info: {
+      title: "Apple Store API",
+      version: "1.0.0",
+      description: "API documentation for Apple Store backend",
+    },
+    servers: [
+      {
+        url: `http://localhost:${port}`,
+        description: "Development server",
+      },
+    ],
+    components: {
+      schemas: {
+        Product: {
+          type: "object",
+          properties: {
+            product_id: {
+              type: "integer",
+              description: "Product ID",
+            },
+            name: {
+              type: "string",
+              description: "Product name",
+            },
+            description: {
+              type: "string",
+              description: "Product description",
+            },
+            img_url: {
+              type: "string",
+              description: "Product image URL",
+            },
+            price: {
+              type: "number",
+              description: "Product price",
+            },
+            slug: {
+              type: "string",
+              description: "Product slug",
+            },
+          },
+        },
+      },
+    },
+    tags: [
+      {
+        name: "Products",
+        description: "Apple products management endpoints",
+      },
+    ],
+  },
+  apis: ["./index.js"], // Path to the API files
+};
+
+const swaggerSpec = swaggerJsdoc(swaggerOptions);
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
+/**
+ * @swagger
+ * /:
+ *   post:
+ *     summary: Create a new Apple product
+ *     tags: [Products]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - name
+ *               - description
+ *               - img_url
+ *               - price
+ *               - slug
+ *             properties:
+ *               name:
+ *                 type: string
+ *                 description: Product name
+ *               description:
+ *                 type: string
+ *                 description: Product description
+ *               img_url:
+ *                 type: string
+ *                 description: Product image URL
+ *               price:
+ *                 type: number
+ *                 description: Product price
+ *               slug:
+ *                 type: string
+ *                 description: Product slug
+ *     responses:
+ *       201:
+ *         description: Product created successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Product'
+ *       500:
+ *         description: Server error
+ */
 app.post("/", async (req, res) => {
   try {
     const newAppleProduct = await AppleProducts.create({
@@ -73,6 +180,24 @@ app.post("/", async (req, res) => {
   }
 });
 
+/**
+ * @swagger
+ * /:
+ *   get:
+ *     summary: Get all Apple products
+ *     tags: [Products]
+ *     responses:
+ *       200:
+ *         description: List of all products
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Product'
+ *       500:
+ *         description: Server error
+ */
 app.get("/", async (req, res) => {
   try {
     const allAppleProducts = await AppleProducts.findAll();
@@ -88,6 +213,29 @@ app.get("/", async (req, res) => {
   }
 });
 
+/**
+ * @swagger
+ * /{id}:
+ *   get:
+ *     summary: Get a product by ID
+ *     tags: [Products]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: Product ID
+ *     responses:
+ *       200:
+ *         description: Product details
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Product'
+ *       404:
+ *         description: Product not found
+ */
 app.get("/:id", async (req, res) => {
   const appleProduct = await AppleProducts.findByPk(req.params.id);
   res.setHeader("Content-Type", "application/json");
@@ -95,6 +243,25 @@ app.get("/:id", async (req, res) => {
   res.end();
 });
 
+/**
+ * @swagger
+ * /{id}:
+ *   delete:
+ *     summary: Delete a product by ID
+ *     tags: [Products]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: Product ID
+ *     responses:
+ *       200:
+ *         description: Product deleted successfully
+ *       404:
+ *         description: Product not found
+ */
 app.delete("/:id", async (req, res) => {
   await AppleProducts.destroy({
     where: {
@@ -106,6 +273,51 @@ app.delete("/:id", async (req, res) => {
   res.end();
 });
 
+/**
+ * @swagger
+ * /{id}:
+ *   put:
+ *     summary: Update a product by ID
+ *     tags: [Products]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: Product ID
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *                 description: Product name
+ *               description:
+ *                 type: string
+ *                 description: Product description
+ *               img_url:
+ *                 type: string
+ *                 description: Product image URL
+ *               price:
+ *                 type: number
+ *                 description: Product price
+ *               slug:
+ *                 type: string
+ *                 description: Product slug
+ *     responses:
+ *       200:
+ *         description: Product updated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Product'
+ *       404:
+ *         description: Product not found
+ */
 app.put("/:id", async (req, res) => {
   const updateAppleProduct = await AppleProducts.findByPk(req.params.id);
   updateAppleProduct.set({
