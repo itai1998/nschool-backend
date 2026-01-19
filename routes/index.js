@@ -1,6 +1,8 @@
 import express from "express";
-import product from "./products.js";
+import productRoutes from "./product.js";
 
 const router = express.Router();
 
-router.use("/product", product);
+router.use("/products", productRoutes);
+
+export default router;
