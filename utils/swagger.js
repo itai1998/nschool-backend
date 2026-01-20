@@ -46,12 +46,37 @@ export const getSwaggerSpec = (port) => {
               },
             },
           },
+          LoginRequest: {
+            type: "object",
+            required: ["username"],
+            properties: {
+              username: {
+                type: "string",
+                description: "Username for login",
+                example: "test",
+              },
+            },
+          },
+          LoginResponse: {
+            type: "object",
+            properties: {
+              accessToken: {
+                type: "string",
+                description: "JWT access token",
+                example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+              },
+            },
+          },
         },
       },
       tags: [
         {
           name: "Products",
           description: "Apple products management endpoints",
+        },
+        {
+          name: "Auth",
+          description: "Authentication endpoints",
         },
       ],
     },
