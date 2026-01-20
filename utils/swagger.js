@@ -16,6 +16,14 @@ export const getSwaggerSpec = (port) => {
         },
       ],
       components: {
+        securitySchemes: {
+          bearerAuth: {
+            type: "http",
+            scheme: "bearer",
+            bearerFormat: "JWT",
+            description: "Enter JWT token",
+          },
+        },
         schemas: {
           Product: {
             type: "object",

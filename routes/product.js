@@ -6,6 +6,7 @@ import {
   updateProduct,
   deleteProduct,
 } from "../controllers/productController.js";
+import { authenticateToken } from "../controllers/authController.js";
 
 const router = express.Router();
 
@@ -15,6 +16,8 @@ const router = express.Router();
  *   get:
  *     summary: Get all Apple products
  *     tags: [Products]
+ *     security:
+ *       - bearerAuth: []
  *     responses:
  *       200:
  *         description: List of all products
@@ -24,10 +27,14 @@ const router = express.Router();
  *               type: array
  *               items:
  *                 $ref: '#/components/schemas/Product'
+ *       401:
+ *         description: Unauthorized - Missing or invalid token
+ *       403:
+ *         description: Forbidden - Invalid token
  *       500:
  *         description: Server error
  */
-router.get("/", getAllProducts);
+router.get("/", authenticateToken, getAllProducts);
 
 /**
  * @swagger

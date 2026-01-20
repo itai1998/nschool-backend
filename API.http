@@ -33,8 +33,12 @@ DELETE http://localhost:3000/7
 
 
 ### 
-POST http://localhost:3000/login
+POST http://localhost:3000/auth/login
 Content-Type: application/json
 {
     "username": "test"
 }
+
+### Get all products (requires authentication)
+GET http://localhost:3000/products
+Authorization: Bearer YOUR_TOKEN_HERE
