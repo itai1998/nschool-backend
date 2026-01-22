@@ -75,6 +75,38 @@ export const getSwaggerSpec = (port) => {
               },
             },
           },
+          RefreshTokenRequest: {
+            type: "object",
+            required: ["token"],
+            properties: {
+              token: {
+                type: "string",
+                description: "Refresh token to generate new access token",
+                example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+              },
+            },
+          },
+          RefreshTokenResponse: {
+            type: "object",
+            properties: {
+              accessToken: {
+                type: "string",
+                description: "New JWT access token",
+                example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+              },
+            },
+          },
+          LogoutRequest: {
+            type: "object",
+            required: ["token"],
+            properties: {
+              token: {
+                type: "string",
+                description: "Refresh token to remove from valid tokens",
+                example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+              },
+            },
+          },
         },
       },
       tags: [
