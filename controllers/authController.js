@@ -9,8 +9,8 @@ const generateAccessToke = (user) => {
 
 export const login = async (req, res) => {
   try {
-    const username = req.body.username;
-    const user = { name: username };
+    const { username, password } = req.body;
+    const user = { name: username, password: password };
     const accessToken = generateAccessToke(user);
     const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET);
     refreshTokens.push(refreshToken);

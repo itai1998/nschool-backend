@@ -61,7 +61,12 @@ export const getSwaggerSpec = (port) => {
               username: {
                 type: "string",
                 description: "Username for login",
-                example: "test",
+                example: "username",
+              },
+              password: {
+                type: "string",
+                description: "Password for login",
+                example: "password",
               },
             },
           },
