@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken";
+import { expressjwt } from "express-jwt";
 
 let refreshTokens = [];
 
@@ -8,7 +9,7 @@ const generateAccessToke = (user) => {
 
 export const login = async (req, res) => {
   try {
-    const { username } = req.body;
+    const username = req.body.username;
     const user = { name: username };
     const accessToken = generateAccessToke(user);
     const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET);
@@ -25,18 +26,24 @@ export const login = async (req, res) => {
   }
 };
 
-export const authenticateToken = (req, res, next) => {
-  const authHeader = req.headers["authorization"];
-  const token = authHeader && authHeader.split(" ")[1];
-  if (token == null) {
-    return res.status(401).json({ message: "Unauthorized" });
-  }
-  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
-    if (err) return res.status(403).json({ message: "Forbidden" });
-    req.user = user;
-    next();
-  });
-};
+// export const authenticateToken = (req, res, next) => {
+//   const authHeader = req.headers["authorization"];
+//   const token = authHeader && authHeader.split(" ")[1];
+//   if (token == null) {
+//     return res.status(401).json({ message: "Unauthorized" });
+//   }
+//   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+//     if (err) return res.status(403).json({ message: "Forbidden" });
+//     req.user = user;
+//     next();
+//   });
+// };
+
+// Use expressjwt to authenticate the token
+export const authenticateToken = expressjwt({
+  secret: process.env.ACCESS_TOKEN_SECRET,
+  algorithms: ["HS256"],
+});
 
 export const getRefreshToken = async (req, res) => {
   const refreshToken = req.body.token;
