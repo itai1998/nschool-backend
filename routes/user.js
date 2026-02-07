@@ -137,14 +137,6 @@ router.post("/", createUser);
  *               address:
  *                 type: string
  *                 description: User's address
- *               create_at:
- *                 type: string
- *                 format: date-time
- *                 description: User creation date
- *               update_at:
- *                 type: string
- *                 format: date-time
- *                 description: User update date
  *     responses:
  *       200:
  *         description: User updated successfully

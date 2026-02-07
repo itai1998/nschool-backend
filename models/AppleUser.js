@@ -15,14 +15,14 @@ AppleUser.init(
     phone: DataTypes.STRING,
     email: DataTypes.STRING,
     address: DataTypes.STRING,
-    create_at: DataTypes.DATE,
-    update_at: DataTypes.DATE,
   },
   {
     sequelize,
     modelName: "AppleUser",
     tableName: "users",
-    timestamps: false,
+    timestamps: true,
+    createdAt: "create_at",
+    updatedAt: "update_at",
     freezeTableName: true,
   }
 );

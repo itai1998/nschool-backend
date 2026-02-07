@@ -38,8 +38,6 @@ export const createUser = async (req, res) => {
       phone: req.body.phone,
       email: req.body.email,
       address: req.body.address,
-      create_at: new Date(),
-      update_at: new Date(),
     });
 
     res.status(201).json(newUser);
@@ -68,8 +66,6 @@ export const updateUser = async (req, res) => {
       phone: req.body.phone,
       email: req.body.email,
       address: req.body.address,
-      create_at: req.body.create_at,
-      update_at: req.body.update_at,
     });
 
     await updatedUser.save();
