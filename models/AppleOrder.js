@@ -11,7 +11,6 @@ AppleOrder.init(
       autoIncrement: true,
     },
     user_id: DataTypes.INTEGER,
-    create_at: DataTypes.DATE,
     shipping_address: DataTypes.STRING,
     total_amount: DataTypes.DECIMAL,
   },
@@ -19,7 +18,9 @@ AppleOrder.init(
     sequelize,
     modelName: "AppleOrder",
     tableName: "orders",
-    timestamps: false,
+    timestamps: true,
+    createdAt: "create_at",
+    updatedAt: "update_at",
     freezeTableName: true,
   }
 );

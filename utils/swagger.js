@@ -70,6 +70,11 @@ export const getSwaggerSpec = (port) => {
                 format: "date-time",
                 description: "Order creation date",
               },
+              update_at: {
+                type: "string",
+                format: "date-time",
+                description: "Order update date",
+              },
               shipping_address: {
                 type: "string",
                 description: "Shipping address",

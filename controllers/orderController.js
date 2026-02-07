@@ -34,7 +34,6 @@ export const createOrder = async (req, res) => {
   try {
     const newOrder = await AppleOrder.create({
       user_id: req.body.user_id,
-      create_at: new Date(),
       shipping_address: req.body.shipping_address,
       total_amount: req.body.total_amount,
     });
@@ -61,7 +60,6 @@ export const updateOrder = async (req, res) => {
 
     updateOrder.set({
       user_id: req.body.user_id,
-      create_at: req.body.create_at,
       shipping_address: req.body.shipping_address,
       total_amount: req.body.total_amount,
     });
