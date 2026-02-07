@@ -34,7 +34,7 @@ export const createOrder = async (req, res) => {
   try {
     const newOrder = await AppleOrder.create({
       user_id: req.body.user_id,
-      create_at: req.body.create_at,
+      create_at: new Date(),
       shipping_address: req.body.shipping_address,
       total_amount: req.body.total_amount,
     });

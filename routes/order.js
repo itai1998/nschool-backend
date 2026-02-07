@@ -6,7 +6,6 @@ import {
   updateOrder,
   deleteOrder,
 } from "../controllers/orderController.js";
-import { authenticateToken } from "../controllers/authController.js";
 
 const router = express.Router();
 
@@ -83,10 +82,6 @@ router.get("/:id", getOrderById);
  *               user_id:
  *                 type: integer
  *                 description: User ID
- *               create_at:
- *                 type: string
- *                 format: date-time
- *                 description: Order creation date
  *               shipping_address:
  *                 type: string
  *                 description: Shipping address
