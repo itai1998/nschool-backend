@@ -81,6 +81,42 @@ export const getSwaggerSpec = (port) => {
               },
             },
           },
+          OrderItem: {
+            type: "object",
+            properties: {
+              order_item_id: {
+                type: "integer",
+                description: "Order item ID",
+              },
+              order_id: {
+                type: "integer",
+                description: "Order ID",
+              },
+              product_id: {
+                type: "integer",
+                description: "Product ID",
+              },
+              quantity: {
+                type: "integer",
+                description: "Quantity of the product",
+              },
+              unit_price: {
+                type: "number",
+                format: "decimal",
+                description: "Unit price of the product",
+              },
+              create_at: {
+                type: "string",
+                format: "date-time",
+                description: "Order item creation date",
+              },
+              update_at: {
+                type: "string",
+                format: "date-time",
+                description: "Order item update date",
+              },
+            },
+          },
           User: {
             type: "object",
             properties: {
@@ -192,6 +228,10 @@ export const getSwaggerSpec = (port) => {
         {
           name: "Orders",
           description: "Apple orders management endpoints",
+        },
+        {
+          name: "OrderItems",
+          description: "Apple order items management endpoints",
         },
         {
           name: "Users",
