@@ -3,7 +3,7 @@ import { expressjwt } from "express-jwt";
 
 let refreshTokens = [];
 
-const generateAccessToke = (user) => {
+const generateAccessToken = (user) => {
   return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: "15s" });
 };
 
@@ -11,7 +11,7 @@ export const login = async (req, res) => {
   try {
     const { username, password } = req.body;
     const user = { name: username, password: password };
-    const accessToken = generateAccessToke(user);
+    const accessToken = generateAccessToken(user);
     const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET);
     refreshTokens.push(refreshToken);
     res.json({ accessToken: accessToken, refreshToken: refreshToken });
@@ -53,7 +53,7 @@ export const getRefreshToken = async (req, res) => {
     return res.status(403).json({ message: "Forbidden" });
   jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
     if (err) return res.status(403).json({ message: "Forbidden" });
-    const accessToken = generateAccessToke({ name: user.name });
+    const accessToken = generateAccessToken({ name: user.name });
     res.json({ accessToken: accessToken });
   });
 };

@@ -54,6 +54,33 @@ export const getSwaggerSpec = (port) => {
               },
             },
           },
+          Order: {
+            type: "object",
+            properties: {
+              order_id: {
+                type: "integer",
+                description: "Order ID",
+              },
+              user_id: {
+                type: "integer",
+                description: "User ID",
+              },
+              create_at: {
+                type: "string",
+                format: "date-time",
+                description: "Order creation date",
+              },
+              shipping_address: {
+                type: "string",
+                description: "Shipping address",
+              },
+              total_amount: {
+                type: "number",
+                format: "decimal",
+                description: "Total order amount",
+              },
+            },
+          },
           LoginRequest: {
             type: "object",
             required: ["username"],
@@ -122,6 +149,10 @@ export const getSwaggerSpec = (port) => {
         {
           name: "Auth",
           description: "Authentication endpoints",
+        },
+        {
+          name: "Orders",
+          description: "Apple orders management endpoints",
         },
       ],
     },
