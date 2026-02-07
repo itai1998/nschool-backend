@@ -52,6 +52,16 @@ export const getSwaggerSpec = (port) => {
                 type: "string",
                 description: "Product slug",
               },
+              create_at: {
+                type: "string",
+                format: "date-time",
+                description: "Product creation date",
+              },
+              update_at: {
+                type: "string",
+                format: "date-time",
+                description: "Product update date",
+              },
             },
           },
           Order: {

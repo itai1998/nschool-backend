@@ -20,7 +20,9 @@ AppleProducts.init(
     sequelize,
     modelName: "AppleProducts",
     tableName: "products",
-    timestamps: false,
+    timestamps: true,
+    createdAt: "create_at",
+    updatedAt: "update_at",
     freezeTableName: true,
   }
 );
