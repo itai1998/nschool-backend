@@ -15,6 +15,7 @@ AppleProducts.init(
     img_url: DataTypes.STRING,
     price: DataTypes.DECIMAL,
     slug: DataTypes.STRING,
+    category: DataTypes.STRING,
   },
   {
     sequelize,

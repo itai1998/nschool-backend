@@ -52,6 +52,7 @@ export const createProduct = async (req, res) => {
       img_url: req.body.img_url,
       price: req.body.price,
       slug: req.body.slug,
+      category: req.body.category,
     });
 
     res.status(201).json(newAppleProduct);
@@ -83,6 +84,7 @@ export const updateProduct = async (req, res) => {
       img_url: req.body.img_url,
       price: req.body.price,
       slug: req.body.slug,
+      category: req.body.category,
     });
 
     await updateAppleProduct.save();

@@ -80,6 +80,7 @@ router.get("/:id", getProductById);
  *               - img_url
  *               - price
  *               - slug
+ *               - category
  *             properties:
  *               name:
  *                 type: string
@@ -96,6 +97,9 @@ router.get("/:id", getProductById);
  *               slug:
  *                 type: string
  *                 description: Product slug
+ *               category:
+ *                 type: string
+ *                 description: Product category
  *     responses:
  *       201:
  *         description: Product created successfully
@@ -143,6 +147,9 @@ router.post("/", createProduct);
  *               slug:
  *                 type: string
  *                 description: Product slug
+ *               category:
+ *                 type: string
+ *                 description: Product category
  *     responses:
  *       200:
  *         description: Product updated successfully
