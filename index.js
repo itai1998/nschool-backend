@@ -1,5 +1,6 @@
 import "dotenv/config";
 import express from "express";
+import cors from "cors";
 import swaggerUi from "swagger-ui-express";
 import { connectDatabase } from "./utils/database.js";
 import { getSwaggerSpec } from "./utils/swagger.js";
@@ -8,6 +9,7 @@ import routes from "./routes/index.js";
 
 // Initialize Express app
 const app = express();
+app.use(cors());
 app.use(express.json());
 
 const port = parseInt(process.env.PORT) || 3000;
