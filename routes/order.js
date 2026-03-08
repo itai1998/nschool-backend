@@ -6,6 +6,7 @@ import {
   updateOrder,
   deleteOrder,
 } from "../controllers/orderController.js";
+// import { authenticateToken } from "../controllers/authController.js";
 
 const router = express.Router();
 
@@ -61,6 +62,9 @@ router.get("/", getAllOrders);
  *         description: Server error
  */
 router.get("/:id", getOrderById);
+
+// TODO: Add authentication to get order by user id
+//router.get("/me", authenticateToken, getOrderById);
 
 /**
  * @swagger

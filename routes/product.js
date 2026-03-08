@@ -6,7 +6,7 @@ import {
   updateProduct,
   deleteProduct,
 } from "../controllers/productController.js";
-import { authenticateToken } from "../controllers/authController.js";
+// import { authenticateToken } from "../controllers/authController.js";
 
 const router = express.Router();
 
@@ -34,7 +34,8 @@ const router = express.Router();
  *       500:
  *         description: Server error
  */
-router.get("/", authenticateToken, getAllProducts);
+router.get("/", getAllProducts);
+// router.get("/", authenticateToken, getAllProducts);
 
 /**
  * @swagger
