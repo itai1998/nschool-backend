@@ -15,7 +15,7 @@ app.use(express.json());
 const port = parseInt(process.env.PORT) || 3000;
 
 // Connect to database
-await connectDatabase();
+connectDatabase();
 
 // Sync models
 AppleProducts.sync();

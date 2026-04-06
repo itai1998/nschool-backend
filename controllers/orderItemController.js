@@ -10,7 +10,7 @@ export const getAllOrderItems = async (req, res) => {
   }
 };
 
-export const getAllOrderItem = async (req, res) => {
+export const getOrderItem = async (req, res) => {
   try {
     const orderItem = await AppleOrderItem.findByPk(req.params.id);
 

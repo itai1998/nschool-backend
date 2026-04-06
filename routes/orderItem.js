@@ -1,7 +1,7 @@
 import express from "express";
 import {
   getAllOrderItems,
-  getAllOrderItem,
+  getOrderItem,
   createOrderItem,
   updateOrderItem,
   deleteOrderItem,
@@ -54,7 +54,7 @@ router.get("/", getAllOrderItems);
  *       500:
  *         description: Server error
  */
-router.get("/:id", getAllOrderItem);
+router.get("/:id", getOrderItem);
 
 /**
  * @swagger
