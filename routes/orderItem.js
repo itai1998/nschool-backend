@@ -3,6 +3,7 @@ import {
   getAllOrderItems,
   getOrderItem,
   createOrderItem,
+  createOrderItems,
   updateOrderItem,
   deleteOrderItem,
 } from "../controllers/orderItemController.js";
@@ -28,6 +29,62 @@ const router = express.Router();
  *         description: Server error
  */
 router.get("/", getAllOrderItems);
+
+/**
+ * @swagger
+ * /orderItems/bulk:
+ *   post:
+ *     summary: Create multiple order items (bulk)
+ *     description: Request body must be a JSON array of order item objects (not wrapped in an object).
+ *     tags: [OrderItems]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: array
+ *             minItems: 1
+ *             items:
+ *               type: object
+ *               required:
+ *                 - order_id
+ *                 - product_id
+ *                 - quantity
+ *                 - unit_price
+ *               properties:
+ *                 order_id:
+ *                   type: integer
+ *                 product_id:
+ *                   type: integer
+ *                 quantity:
+ *                   type: integer
+ *                 unit_price:
+ *                   type: number
+ *                   format: decimal
+ *           example:
+ *             - order_id: 1
+ *               product_id: 10
+ *               quantity: 2
+ *               unit_price: 19.99
+ *             - order_id: 1
+ *               product_id: 11
+ *               quantity: 1
+ *               unit_price: 49.5
+ *     responses:
+ *       201:
+ *         description: All items created
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/OrderItem'
+ *       400:
+ *         description: Body is not a non-empty array
+ *       500:
+ *         description: Server error
+ */
+router.post("/bulk", createOrderItems);
 
 /**
  * @swagger

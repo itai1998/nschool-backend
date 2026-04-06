@@ -51,6 +51,33 @@ export const createOrderItem = async (req, res) => {
   }
 };
 
+export const createOrderItems = async (req, res) => {
+  try {
+    // 1. Expecting req.body to be an array of objects
+    const items = req.body;
+
+    if (!Array.isArray(items) || items.length === 0) {
+      return res
+        .status(400)
+        .json({ message: "Payload must be a non-empty array." });
+    }
+
+    // 2. Use bulkCreate for a single optimized database hit
+    // validate: true ensures that each object in the array still follows your model rules
+    const createdItems = await AppleOrderItem.bulkCreate(items, {
+      validate: true,
+    });
+
+    res.status(201).json(createdItems);
+  } catch (err) {
+    console.error("POST /orderItems/bulk error:", err);
+    res.status(500).json({
+      message: "Failed to create order items",
+      error: err.message,
+    });
+  }
+};
+
 export const updateOrderItem = async (req, res) => {
   try {
     const updatedOrderItem = await AppleOrderItem.findByPk(req.params.id);
