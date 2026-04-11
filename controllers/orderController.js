@@ -1,4 +1,5 @@
 import AppleOrder from "../models/AppleOrder.js";
+import AppleOrderItem from "../models/AppleOrderItem.js";
 
 export const getAllOrders = async (req, res) => {
   try {
@@ -98,5 +99,37 @@ export const deleteOrder = async (req, res) => {
       parent: err.parent?.message,
       sql: err.sql,
     });
+  }
+};
+
+export const checkoutOrder = async (req, res) => {
+  try {
+    const { user_id, shipping_address, total_amount, items } = req.body;
+
+    if (!items || !Array.isArray(items)) {
+      return res
+        .status(400)
+        .json({ message: "items must be a non-empty array" });
+    }
+
+    const newOrder = await AppleOrder.create({
+      user_id,
+      shipping_address,
+      total_amount,
+    });
+
+    const itemsWithId = items.map((item) => ({
+      ...item,
+      order_id: newOrder.getDataValue("order_id"),
+    }));
+
+    const createdItems = await AppleOrderItem.bulkCreate(itemsWithId, {
+      validate: true,
+    });
+
+    res.status(201).json({ order: newOrder, items: createdItems }); // use createdItems + send response
+  } catch (err) {
+    console.error("Checkout Error:", err);
+    res.status(500).json({ message: "Checkout failed", error: err.message });
   }
 };

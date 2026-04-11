@@ -5,6 +5,7 @@ import {
   createOrder,
   updateOrder,
   deleteOrder,
+  checkoutOrder,
 } from "../controllers/orderController.js";
 // import { authenticateToken } from "../controllers/authController.js";
 
@@ -171,5 +172,80 @@ router.put("/:id", updateOrder);
  *         description: Server error
  */
 router.delete("/:id", deleteOrder);
+
+/**
+ * @swagger
+ * /orders/checkout:
+ *   post:
+ *     summary: Checkout - create an order with its items in one request
+ *     tags: [Orders]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - user_id
+ *               - shipping_address
+ *               - total_amount
+ *               - items
+ *             properties:
+ *               user_id:
+ *                 type: integer
+ *                 description: ID of the user placing the order
+ *                 example: 1
+ *               shipping_address:
+ *                 type: string
+ *                 description: Delivery address for the order
+ *                 example: "1 Infinite Loop, Cupertino, CA 95014"
+ *               total_amount:
+ *                 type: number
+ *                 format: decimal
+ *                 description: Total price of the order
+ *                 example: 1299.99
+ *               items:
+ *                 type: array
+ *                 description: List of products being ordered
+ *                 items:
+ *                   type: object
+ *                   required:
+ *                     - product_id
+ *                     - quantity
+ *                     - unit_price
+ *                   properties:
+ *                     product_id:
+ *                       type: integer
+ *                       description: ID of the product
+ *                       example: 42
+ *                     quantity:
+ *                       type: integer
+ *                       description: Number of units ordered
+ *                       example: 2
+ *                     unit_price:
+ *                       type: number
+ *                       format: decimal
+ *                       description: Price per unit at the time of purchase
+ *                       example: 649.99
+ *     responses:
+ *       201:
+ *         description: Order and items created successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 order:
+ *                   $ref: '#/components/schemas/Order'
+ *                 items:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/OrderItem'
+ *       400:
+ *         description: Bad request - items must be a non-empty array
+ *       500:
+ *         description: Checkout failed
+ */
+router.post("/checkout", checkoutOrder);
 
 export default router;
